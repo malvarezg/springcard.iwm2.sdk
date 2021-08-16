@@ -508,7 +508,11 @@ namespace SpringCard.IWM2
 				while(offset < len)
 				{
 					tmp = new byte[buffer[offset]];
-					Array.ConstrainedCopy(buffer, offset, tmp, 0, buffer[offset]);
+					if ((buffer[offset] + offset) < buffer.Length)
+						Array.ConstrainedCopy(buffer, offset, tmp, 0, buffer[offset]);
+					else
+						Array.ConstrainedCopy(buffer, offset, tmp, 0, buffer.Length - offset);
+
 					offset += buffer[offset];
 					
 					AnalyseBock(tmp, tmp.Length);
